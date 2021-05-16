@@ -1,4 +1,32 @@
 
+# import pygame, sys
+# from pygame.locals import *
+
+# def main():
+#     pygame.init()
+
+#     DISPLAY=pygame.display.set_mode((500,400),0,32)
+
+#     WHITE=(255,255,255)
+#     BLUE=(0,0,255)
+
+#     DISPLAY.fill(WHITE)
+
+#     pygame.draw.rect(DISPLAY,BLUE,(200,150,200,20))
+
+#     while True:
+#         for event in pygame.event.get():
+#             if event.type==QUIT:
+#                 pygame.quit()
+#                 sys.exit()
+#         pygame.display.update()
+
+# main()
+
+
+
+
+
 import os
 import sys, pygame
 pygame.init()
@@ -6,9 +34,18 @@ pygame.init()
 size = width, height = 820, 640
 speed = [2, 2]
 black = 0, 0, 0
-BALL_WIDTH, BALL_HEIGHT = 55, 40
+blue = 0 , 0, 255
+BALL_WIDTH, BALL_HEIGHT = 55, 55
+barpositionbegin = 200
+barwidth = 100
+barheight = 40
+barbegins = 600
+
+
 
 screen = pygame.display.set_mode(size)
+
+
 
 ballImage = pygame.image.load(
     os.path.join('Assets', 'ball.png'))
@@ -17,6 +54,7 @@ ball = pygame.transform.rotate(pygame.transform.scale(
 
 
 ballrect = ball.get_rect()
+
 
 while 1:
     for event in pygame.event.get():
@@ -27,10 +65,28 @@ while 1:
         speed[0] = -speed[0]
     if ballrect.top < 0 or ballrect.bottom > height:
         speed[1] = -speed[1]
+        
+    ballposition = ballrect.left
+    print(ballposition)
+        
+    
 
     screen.fill(black)
+    pygame.draw.rect(screen,blue,(barpositionbegin, barbegins, barwidth, barheight))
+    
+    
     screen.blit(ball, ballrect)
+  
     pygame.display.flip()
+
+
+
+
+
+
+
+
+
 
 
 
