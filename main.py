@@ -42,6 +42,19 @@ barheight = 40
 barbegins = 600
 barends = barpositionbegin + barwidth
 newheight = height + 10
+VEL = 5
+barp = barpositionbegin
+
+
+
+def bar_handle_movement(keys_pressed, barp, VEL):
+  
+    
+    if keys_pressed[pygame.K_a] and barp > 0:  # LEFT
+        barp -= VEL
+    if keys_pressed[pygame.K_d] and barp + VEL + barwidth < width:  # RIGHT
+        barp += VEL
+    
 
 
 
@@ -61,13 +74,16 @@ ballrect = ball.get_rect()
 
 
 while 1:
+    barp = barpositionbegin
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
+
 
     ballrect = ballrect.move(speed)
     ballposition = ballrect.left
     
-    if barpositionbegin < ballposition < barends:
+    if barp < ballposition < barends:
         floor = newheight - barheight
     else: 
         floor = newheight
@@ -85,7 +101,11 @@ while 1:
     
 
     screen.fill(black)
-    pygame.draw.rect(screen,blue,(barpositionbegin, barbegins, barwidth, barheight))
+    
+    bluebar = pygame.draw.rect(screen,blue,(barpositionbegin, barbegins, barwidth, barheight))
+    
+    keys_pressed = pygame.key.get_pressed()
+    bar_handle_movement(keys_pressed, barp, VEL)
     
     
     screen.blit(ball, ballrect)
