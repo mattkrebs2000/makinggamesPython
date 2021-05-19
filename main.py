@@ -32,7 +32,7 @@ import sys, pygame
 pygame.init()
 
 size = width, height = 820, 640
-speed = [2, 2]
+speed = [1,1]
 black = 0, 0, 0
 blue = 0 , 0, 255
 BALL_WIDTH, BALL_HEIGHT = 55, 55
@@ -40,6 +40,10 @@ barpositionbegin = 200
 barwidth = 100
 barheight = 40
 barbegins = 600
+barends = barpositionbegin + barwidth
+newheight = height + 10
+
+
 
 
 
@@ -61,12 +65,21 @@ while 1:
         if event.type == pygame.QUIT: sys.exit()
 
     ballrect = ballrect.move(speed)
+    ballposition = ballrect.left
+    
+    if barpositionbegin < ballposition < barends:
+        floor = newheight - barheight
+    else: 
+        floor = newheight
+    
+    
     if ballrect.left < 0 or ballrect.right > width:
         speed[0] = -speed[0]
-    if ballrect.top < 0 or ballrect.bottom > height:
+    if ballrect.top < 0 or ballrect.bottom > floor:
         speed[1] = -speed[1]
         
-    ballposition = ballrect.left
+    # ballposition = ballrect.left
+    
     print(ballposition)
         
     
