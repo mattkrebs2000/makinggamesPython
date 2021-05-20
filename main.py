@@ -29,7 +29,10 @@
 
 import os
 import sys, pygame
+
 pygame.init()
+from pygame import K_RETURN, K_a
+
 
 size = width, height = 820, 640
 speed = [1,1]
@@ -43,17 +46,22 @@ barbegins = 600
 barends = barpositionbegin + barwidth
 newheight = height + 10
 VEL = 5
-barp = barpositionbegin
+
+
+   
 
 
 
-def bar_handle_movement(keys_pressed, barp, VEL):
-  
+
+def bar_handle_movement(keys_pressed, barpositionbegin, VEL, width, barwidth):
+    newvar = barpositionbegin 
     
-    if keys_pressed[pygame.K_a] and barp > 0:  # LEFT
-        barp -= VEL
-    if keys_pressed[pygame.K_d] and barp + VEL + barwidth < width:  # RIGHT
-        barp += VEL
+    if keys_pressed[pygame.K_SPACE]:  # LEFT
+        newvar -= VEL
+        print(newvar)
+    if keys_pressed[pygame.K_a]:  # RIGHT
+        newvar += VEL
+        print(newvar)
     
 
 
@@ -73,9 +81,9 @@ ball = pygame.transform.rotate(pygame.transform.scale(
 ballrect = ball.get_rect()
 
 
+
 while 1:
-    barp = barpositionbegin
-    
+  
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
@@ -83,20 +91,20 @@ while 1:
     ballrect = ballrect.move(speed)
     ballposition = ballrect.left
     
-    if barp < ballposition < barends:
+    if barpositionbegin < ballposition < barends:
         floor = newheight - barheight
     else: 
         floor = newheight
     
     
     if ballrect.left < 0 or ballrect.right > width:
-        speed[0] = -speed[0]
+        speed[0 ] = -speed[0]
     if ballrect.top < 0 or ballrect.bottom > floor:
         speed[1] = -speed[1]
         
     # ballposition = ballrect.left
     
-    print(ballposition)
+   
         
     
 
@@ -104,9 +112,14 @@ while 1:
     
     bluebar = pygame.draw.rect(screen,blue,(barpositionbegin, barbegins, barwidth, barheight))
     
-    keys_pressed = pygame.key.get_pressed()
-    bar_handle_movement(keys_pressed, barp, VEL)
     
+    keys_pressed = pygame.key.get_pressed()
+
+    
+    bar_handle_movement(keys_pressed, barpositionbegin, VEL, width, barwidth)
+    
+    
+   
     
     screen.blit(ball, ballrect)
   
