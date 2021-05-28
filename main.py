@@ -1,39 +1,38 @@
 import os
 import sys, pygame
 
+
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 WHITE = (255, 255, 255)
-Black = (0,0,0)
+Black = (200,200,0)
+
 
 BALL_WIDTH, BALL_HEIGHT = 55, 55
 FPS = 60
 
 speed = [1,1]
 blue = 0 , 0, 255
-barpositionbegin = 200
-barwidth = 100
-barheight = 40
-barbegins = 600
-barends = barpositionbegin + barwidth
+# barpositionbegin = 200
+# barwidth = 100
+# barheight = 40
+# barbegins = 600
+# barends = barpositionbegin + barwidth
 # newheight = height + 10
 VEL = 5
-
-
-
 
 ballImage = pygame.image.load(os.path.join('Assets', 'ball.png'))
 ball = pygame.transform.rotate(pygame.transform.scale(ballImage, (BALL_WIDTH, BALL_HEIGHT)), 90)
 ballrect = ball.get_rect()
 
-bar = pygame.Surface((100,200)) 
-pygame.draw.rect(bar,(0,255,255),(20,20,40,40))
+bar = pygame.Surface((200,50)) 
+# pygame.draw.rect(bar,blue,(0,0,100,50))
 
 
 def draw_window():
     WIN.fill(Black)
     WIN.blit(ball, ballrect)
-    WIN.blit(bar,(200,400)) 
+    WIN.blit(bar,(200,10)) 
     pygame.display.update()
     
 
@@ -45,9 +44,6 @@ def main():
     
     run = True
     
-  
-    
-    
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -58,6 +54,8 @@ def main():
         
         
     pygame.quit()
+
+
 
 if  __name__ == "__main__":
     main()
