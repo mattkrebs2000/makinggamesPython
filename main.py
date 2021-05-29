@@ -1,7 +1,6 @@
 import os
 import sys, pygame
 
-
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 WHITE = (255, 255, 255)
@@ -26,24 +25,13 @@ ballImage = pygame.image.load(os.path.join('Assets', 'ball.png'))
 ball = pygame.transform.scale(ballImage, (BALL_WIDTH, BALL_HEIGHT))
 
 bar = pygame.Surface((200,50)) 
-barr = pygame.draw.rect(bar,blue,(0,0,200,50))
-
-ballrect = ball.get_rect()
+pygame.draw.rect(bar,blue,(0,0,200,50))
 
 
-def draw_window(ballPosition):
+def draw_window(ballPosition, barPosition):
     WIN.fill(Black)
     WIN.blit(ball, (ballPosition.x, ballPosition.y))
-    WIN.blit(bar,(200,HEIGHT - 50)) 
-    
-    # ballrectt = ballrect.move(speed)
-    # ballposition = ballrectt.left
-    # if ballrectt.left < 0 or ballrectt.right > WIDTH:
-    #     speed[0] = -speed[0]
-    # if ballrectt.top < 0 or ballrectt.bottom > HEIGHT:
-    #     speed[1] = -speed[1]
-    
-    
+    WIN.blit(bar, (barPosition.x, HEIGHT - 50)) 
     pygame.display.update()
     
 def moveBall(ballPosition):
@@ -59,6 +47,22 @@ def moveBall(ballPosition):
     
     
     
+    
+def moveBar(barPosition):
+    pygame.event.pump()  # Allow pygame to handle internal actions.
+    key = pygame.key.get_pressed()
+    if key[pygame.K_LEFT]:
+        barPosition.x -= 5
+
+    if key[pygame.K_RIGHT]:
+        barPosition.x += 5
+
+    
+    
+    
+    
+    
+    
 
 
 
@@ -69,6 +73,7 @@ pygame.display.set_caption("First Game!")
 def main():
     
     ballPosition = pygame.Rect(100,300,50,50)
+    barPosition = pygame.Rect(500,300,200,50)
     
     clock = pygame.time.Clock()
     
@@ -80,10 +85,12 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
         
+        
+        moveBar(barPosition)
+        
         moveBall(ballPosition)
         
-        
-        draw_window(ballPosition)
+        draw_window(ballPosition, barPosition)
         
         
         
