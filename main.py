@@ -1,5 +1,6 @@
 import os
 import sys, pygame
+from random import randint
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -7,35 +8,32 @@ WHITE = (255, 255, 255)
 Black = (0,0,0)
 speed = [1,1]
 
-
 BALL_WIDTH, BALL_HEIGHT = 55, 55
 FPS = 60
-
-
 blue = 0 , 0, 255
-# barpositionbegin = 200
-# barwidth = 100
-# barheight = 40
-# barbegins = 600
-# barends = barpositionbegin + barwidth
-# newheight = height + 10
-VEL = 5
 
 ballImage = pygame.image.load(os.path.join('Assets', 'ball.png'))
 ball = pygame.transform.scale(ballImage, (BALL_WIDTH, BALL_HEIGHT))
 
+RECTANGLE = pygame.Surface((100,50))
 bar = pygame.Surface((200,50)) 
 pygame.draw.rect(bar,blue,(0,0,200,50))
+pygame.draw.rect(RECTANGLE, blue, (0,0,95,50))
 
 
 def draw_window(ballPosition, barPosition):
     WIN.fill(Black)
     WIN.blit(ball, (ballPosition.x, ballPosition.y))
     WIN.blit(bar, (barPosition.x, HEIGHT - 50)) 
+    WIN.blit(RECTANGLE, (100,50)) 
+    WIN.blit(RECTANGLE, (200,50))
+    WIN.blit(RECTANGLE, (300,50))
+    
+    
+    
     pygame.display.update()
     
 def moveBall(ballPosition):
-    
     ballPosition.x += speed[0]
     ballPosition.y += speed[1]
     
@@ -43,9 +41,6 @@ def moveBall(ballPosition):
         speed[0] = -speed[0]
     if ballPosition.top < 0 or ballPosition.bottom > HEIGHT:
         speed[1] = -speed[1]
-    
-    
-    
     
     
 def moveBar(barPosition):
@@ -56,18 +51,9 @@ def moveBar(barPosition):
 
     if key[pygame.K_RIGHT]:
         barPosition.x += 5
-
+        
+        
     
-    
-    
-    
-    
-    
-
-
-
-
-
 pygame.display.set_caption("First Game!")
 
 def main():
@@ -91,12 +77,6 @@ def main():
         moveBall(ballPosition)
         
         draw_window(ballPosition, barPosition)
-        
-        
-        
-        
-
-        
         
     pygame.quit()
 
