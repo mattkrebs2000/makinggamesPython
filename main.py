@@ -6,10 +6,10 @@ WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 WHITE = (255, 255, 255)
 Black = (0,0,0)
-speed = [1,1]
+speed = [4,4]
 
 BALL_WIDTH, BALL_HEIGHT = 55, 55
-FPS = 60
+FPS = 80
 blue = 0 , 0, 255
 
 ballImage = pygame.image.load(os.path.join('Assets', 'ball.png'))
@@ -28,18 +28,21 @@ def draw_window(ballPosition, barPosition):
     WIN.blit(RECTANGLE, (100,50)) 
     WIN.blit(RECTANGLE, (200,50))
     WIN.blit(RECTANGLE, (300,50))
-    
-    
-    
     pygame.display.update()
     
 def moveBall(ballPosition, barPosition):
+    
+    difference = ballPosition.bottom - barPosition.top 
+    
     ballPosition.x += speed[0]
     ballPosition.y += speed[1]
     
-    if ballPosition.colliderect(barPosition):
+    if difference < 9 and ballPosition.colliderect(barPosition):
         speed[1] = -speed[1]
-        print(barPosition.y, ballPosition.y)
+        print(barPosition.top, ballPosition.bottom) 
+    
+    if difference > 7 and ballPosition.colliderect(barPosition):
+        speed[0] = -speed[0]
     
     if ballPosition.left < 0 or ballPosition.right > WIDTH:
         speed[0] = -speed[0]
