@@ -1,12 +1,18 @@
 import os
-import sys, pygame
-from random import randint
+import pygame 
+from pygame.locals import *
+from sys import exit
+from random import *
+
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 WHITE = (255, 255, 255)
 Black = (0,0,0)
 speed = [4,4]
+ROW = WIDTH/100
+TOTALBLOCKS = ROW * 3
+WIDTHOFBLOCKS = WIDTH/ROW
 
 BALL_WIDTH, BALL_HEIGHT = 55, 55
 FPS = 80
@@ -20,6 +26,42 @@ bar = pygame.Surface((200,50))
 pygame.draw.rect(bar,blue,(0,0,200,50))
 pygame.draw.rect(RECTANGLE, blue, (0,0,95,50))
 
+def getHeightOfRow(start):
+    if start < 10:
+        return 0
+    if start > 9 and start < 19:
+        return 50
+    if start > 18:
+        return 100
+    
+def getWidthOfRow(start):
+    return start % 9
+    
+
+
+class Rectangle:
+    def __init__(self, pos, color, size):
+        self.pos = pos
+        self.color = color
+        self.size = size
+        self.hit = False
+    def draw(self):
+        pygame.draw.rect(WIN, self.color, Rect(self.pos, self.size))
+
+
+rectangles = []     
+
+start = 0 
+
+for start in range(int(TOTALBLOCKS)):
+    Height = getHeightOfRow(start)
+    WidthSpot = getWidthOfRow(start) * 100
+    random_color = (randint(0,255), randint(0,255), randint(0,255))
+    random_pos = (WidthSpot, Height)
+    random_size = (WIDTHOFBLOCKS, 50)
+    rectangles.append(Rectangle(random_pos, random_color, random_size))
+
+
 
 def draw_window(ballPosition, barPosition):
     WIN.fill(Black)
@@ -28,6 +70,13 @@ def draw_window(ballPosition, barPosition):
     WIN.blit(RECTANGLE, (100,50)) 
     WIN.blit(RECTANGLE, (200,50))
     WIN.blit(RECTANGLE, (300,50))
+    
+    for rectangle in rectangles:
+        print(rectangle.pos[0])
+        #WIN out rectangles based on a condition 
+        if rectangle.hit == False:
+            rectangle.draw()
+    
     pygame.display.update()
     
 def moveBall(ballPosition, barPosition):
