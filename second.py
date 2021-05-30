@@ -7,7 +7,7 @@ WIDTH, HEIGHT = 900, 500
 ROW = WIDTH/100
 TOTALBLOCKS = ROW * 3
 WIDTHOFBLOCKS = WIDTH/ROW
-screen = pygame.display.set_mode((WIDTH, HEIGHT), 0,32)
+WIN = pygame.display.set_mode((WIDTH, HEIGHT), 0,32)
 
 def getHeightOfRow(start):
     if start < 10:
@@ -27,8 +27,9 @@ class Rectangle:
         self.pos = pos
         self.color = color
         self.size = size
+        self.hit = False
     def draw(self):
-        pygame.draw.rect(screen, self.color, Rect(self.pos, self.size))
+        pygame.draw.rect(WIN, self.color, Rect(self.pos, self.size))
 
 
 rectangles = []     
@@ -47,12 +48,12 @@ while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
-    screen.lock()
+    WIN.lock()
     for rectangle in rectangles:
-    
-        #screen out rectangles based on a condition 
-        if rectangle.pos[0] > 500:
+        print(rectangle.pos[0])
+        #WIN out rectangles based on a condition 
+        if rectangle.hit == True:
             rectangle.draw()
-    screen.unlock()
+    WIN.unlock()
     pygame.display.update()
 

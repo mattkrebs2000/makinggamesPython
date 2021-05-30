@@ -16,7 +16,7 @@ ballImage = pygame.image.load(os.path.join('Assets', 'ball.png'))
 ball = pygame.transform.scale(ballImage, (BALL_WIDTH, BALL_HEIGHT))
 
 RECTANGLE = pygame.Surface((100,50))
-bar = pygame.Surface((200,50)) 
+bar = pygame.Surface((200,50))  
 pygame.draw.rect(bar,blue,(0,0,200,50))
 pygame.draw.rect(RECTANGLE, blue, (0,0,95,50))
 
@@ -33,9 +33,13 @@ def draw_window(ballPosition, barPosition):
     
     pygame.display.update()
     
-def moveBall(ballPosition):
+def moveBall(ballPosition, barPosition):
     ballPosition.x += speed[0]
     ballPosition.y += speed[1]
+    
+    if ballPosition.colliderect(barPosition):
+        speed[1] = -speed[1]
+        print(barPosition.y, ballPosition.y)
     
     if ballPosition.left < 0 or ballPosition.right > WIDTH:
         speed[0] = -speed[0]
@@ -59,7 +63,7 @@ pygame.display.set_caption("First Game!")
 def main():
     
     ballPosition = pygame.Rect(100,300,50,50)
-    barPosition = pygame.Rect(500,300,200,50)
+    barPosition = pygame.Rect(850,450,200,50)
     
     clock = pygame.time.Clock()
     
@@ -74,7 +78,7 @@ def main():
         
         moveBar(barPosition)
         
-        moveBall(ballPosition)
+        moveBall(ballPosition,barPosition)
         
         draw_window(ballPosition, barPosition)
         
