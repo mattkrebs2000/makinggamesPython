@@ -21,17 +21,15 @@ blue = 0 , 0, 255
 ballImage = pygame.image.load(os.path.join('Assets', 'ball.png'))
 ball = pygame.transform.scale(ballImage, (BALL_WIDTH, BALL_HEIGHT))
 
-RECTANGLE = pygame.Surface((100,50))
 bar = pygame.Surface((200,50))  
 pygame.draw.rect(bar,blue,(0,0,200,50))
-pygame.draw.rect(RECTANGLE, blue, (0,0,95,50))
 
 def getHeightOfRow(start):
-    if start < 10:
+    if start < 9:
         return 0
-    if start > 9 and start < 19:
+    if start > 8 and start < 18:
         return 50
-    if start > 18:
+    if start > 17:
         return 100
     
 def getWidthOfRow(start):
@@ -67,9 +65,6 @@ def draw_window(ballPosition, barPosition):
     WIN.fill(Black)
     WIN.blit(ball, (ballPosition.x, ballPosition.y))
     WIN.blit(bar, (barPosition.x, HEIGHT - 50)) 
-    WIN.blit(RECTANGLE, (100,50)) 
-    WIN.blit(RECTANGLE, (200,50))
-    WIN.blit(RECTANGLE, (300,50))
     
     for rectangle in rectangles:
         print(rectangle.pos[0])
