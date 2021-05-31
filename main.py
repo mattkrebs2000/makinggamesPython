@@ -67,11 +67,10 @@ def draw_window(ballPosition, barPosition):
     WIN.blit(bar, (barPosition.x, HEIGHT - 50)) 
     
     for rectangle in rectangles:
-        print(rectangle.pos[0])
         #WIN out rectangles based on a condition 
         if rectangle.hit == False:
             rectangle.draw()
-    
+            print(rectangle.draw())
     pygame.display.update()
     
 def moveBall(ballPosition, barPosition):
@@ -83,7 +82,6 @@ def moveBall(ballPosition, barPosition):
     
     if difference < 9 and ballPosition.colliderect(barPosition):
         speed[1] = -speed[1]
-        print(barPosition.top, ballPosition.bottom) 
     
     if difference > 7 and ballPosition.colliderect(barPosition):
         speed[0] = -speed[0]
@@ -92,6 +90,10 @@ def moveBall(ballPosition, barPosition):
         speed[0] = -speed[0]
     if ballPosition.top < 0 or ballPosition.bottom > HEIGHT:
         speed[1] = -speed[1]
+        
+    for rectangle in rectangles:
+        if rectangle.colliderect(ballPosition):
+            print(rectangle)
     
     
 def moveBar(barPosition):
